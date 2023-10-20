@@ -29,7 +29,7 @@ class CocktailsTableSeeder extends Seeder
         }
     }*/
     public function run(): void {
-        $cocktails = Http::get('www.thecocktaildb.com/api/json/v1/1/random.php')->json('cocktails');
+        $cocktails = Http::withOptions(['verify' => config('services.guzzle.verify')])->get('https://www.thecocktaildb.com/api/json/v1/1/random.php')->json('cocktails');
         dd($cocktails);
 
     }

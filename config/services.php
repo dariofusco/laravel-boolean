@@ -31,4 +31,7 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'guzzle' => [
+        'verify' => storage_path('certifications/cacert-2023-08-22.pem'),
+    ],
 ];
