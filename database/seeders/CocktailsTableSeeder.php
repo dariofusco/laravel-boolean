@@ -28,9 +28,50 @@ class CocktailsTableSeeder extends Seeder
             $new_cocktail->save();
         }
     }*/
-    public function run(): void {
+    /* public function run(): void {
         $cocktails = Http::withOptions(['verify' => config('services.guzzle.verify')])->get('https://www.thecocktaildb.com/api/json/v1/1/random.php')->json('cocktails');
         dd($cocktails);
 
+    }
+} */
+
+    public function run(): void
+    {
+
+        for ($i = 0; $i < 10; $i++) {
+            $response = Http::withOptions(['verify' => config('services.guzzle.verify')])->get('https://www.thecocktaildb.com/api/json/v1/1/random.php');
+
+            $cocktails = $response->json();
+
+            foreach ($cocktails as $cocktail) {
+                $drink = $cocktail[0];
+
+                $new_cocktail = new Cocktail();
+
+                $new_cocktail->name = $drink["strDrink"];
+                $new_cocktail->slug = Str::slug($new_cocktail->name);
+                $new_cocktail->category = $drink["strCategory"];
+                $new_cocktail->alcoholic = $drink["strAlcoholic"];
+                $new_cocktail->instructions = $drink["strInstructionsIT"];
+                $new_cocktail->thumb = $drink["strDrinkThumb"];
+
+                $ingredients = [];
+                $counter = 1;
+
+                do {
+                    $key = "strIngredient" . $counter;
+                    $ingredient = $drink[$key] ?? null;
+                    if ($ingredient) {
+                        $ingredients[] = $ingredient;
+                    }
+                    $counter++;
+                } while ($ingredient != null);
+
+                $new_cocktail->ingredients = json_encode($ingredients);
+
+                $new_cocktail->save();
+            };
+        };
+        /* dd($response->json()); */
     }
 }
