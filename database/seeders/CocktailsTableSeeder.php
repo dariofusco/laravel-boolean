@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
 use App\Models\Cocktail;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
 class CocktailsTableSeeder extends Seeder
@@ -13,7 +14,7 @@ class CocktailsTableSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(Faker $faker): void {
+    /*public function run(Faker $faker): void {
         $cocktails = ["Margarita", "Bloody Mary", "Tommy's Margarita", "Daiquiri", "Gin Fizz", "Paloma", "Ramos Fizz", "Negroni", "Americano", "Spritz", "Boulevardier", "Old Fashioned"];
         foreach ($cocktails as $cocktail) {
             $new_cocktail = new Cocktail();
@@ -26,5 +27,10 @@ class CocktailsTableSeeder extends Seeder
             $new_cocktail->ingredients = json_encode($faker->paragraph());
             $new_cocktail->save();
         }
+    }*/
+    public function run(): void {
+        $cocktails = Http::get('www.thecocktaildb.com/api/json/v1/1/random.php')->json('cocktails');
+        dd($cocktails);
+
     }
 }
