@@ -35,7 +35,7 @@ class CocktailsTableSeeder extends Seeder
     }
 } */
 
-    public function run(): void
+    public function run(Faker $faker): void
     {
 
         for ($i = 0; $i < 10; $i++) {
@@ -54,6 +54,7 @@ class CocktailsTableSeeder extends Seeder
                 $new_cocktail->alcoholic = $drink["strAlcoholic"];
                 $new_cocktail->instructions = $drink["strInstructionsIT"];
                 $new_cocktail->thumb = $drink["strDrinkThumb"];
+                $new_cocktail->price = str_replace(".", ",", strval(number_format($faker->numberBetween(5,15), 2)));
 
                 $ingredients = [];
                 $counter = 1;
