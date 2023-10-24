@@ -1,3 +1,6 @@
-<h1>Un utente ti ha contattato!</h1>
+<x-mail::message>
+  # L'utente {{ $formData["name"] }} ti ha contattato!
 
-<p>I suoi dati:</p>
+  Email: {{ $formData["email"] }} <br>
+  Messaggio: {{ $formData["message"] }}
+</x-mail::message>

@@ -9,16 +9,17 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class NewCocktailMember extends Mailable
+class NewContact extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $formData = [];
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($_formData)
     {
-        //
+        $this->formData = $_formData;
     }
 
     /**
@@ -27,7 +28,7 @@ class NewCocktailMember extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Benvenuto a Cocktails Gruppo D',
+            subject: 'Benvenuto nel Gruppo D Cocktails!',
         );
     }
 
@@ -37,7 +38,7 @@ class NewCocktailMember extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.new_cocktail_member',
+            markdown: 'emails.new_contact',
         );
     }
 

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
 use Illuminate\Http\Request;
-use App\Mail\NewCocktailMember;
+use App\Mail\NewContact;
 use App\Mail\NewContactReceived;
 use Illuminate\Support\Facades\Mail;
 
@@ -24,9 +24,9 @@ class ContactController extends Controller
         $newContact->message = $data["message"];
         $newContact->save();
 
-        Mail::to($data['email'])->send(new NewCocktailMember($data));
+        Mail::to($data['email'])->send(new NewContact($data));
 
-        Mail::to('irynavely93@gmail.com')->send(new NewContactReceived()); 
+        Mail::to('irynavely93@gmail.com')->send(new NewContactReceived($data)); 
 
         return response()->json([
             'message' => "Grazie {$data['name']} per il tuo messaggio. Ti contatteremo presto!"

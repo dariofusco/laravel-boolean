@@ -13,12 +13,13 @@ class NewContactReceived extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $formData = [];
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($_formData)
     {
-        //
+        $this->formData = $_formData;
     }
 
     /**
@@ -27,7 +28,7 @@ class NewContactReceived extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Ti ha contattato un utente!',
+            subject: 'Hai ricevuto la mail di un utente!',
         );
     }
 
@@ -37,7 +38,7 @@ class NewContactReceived extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.new_contact_received',
+            markdown: 'emails.new_contact_received',
         );
     }
 
