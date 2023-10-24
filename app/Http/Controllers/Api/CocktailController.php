@@ -9,17 +9,11 @@ use Illuminate\Http\Request;
 class CocktailController extends Controller {
     //
     public function index() {
-      
+
         $queryString = request()->query();
-      
 
-        $cocktails = Cocktail::all()->where("name",   $queryString["name"]);
-        $query = $cocktails;
-        if(array_key_exists("name", $queryString) && $queryString["name"]){
-            $query->where("name", "LIKE", "%{$queryString["name"]}%");
-        }
+        $cocktails = Cocktail::where("name", "LIKE", "%{$queryString["name"]}%")->get();
 
-        
         return response()->json($cocktails);
     }
 
