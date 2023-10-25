@@ -26,7 +26,7 @@ class ContactController extends Controller
 
         Mail::to($data['email'])->send(new NewContact($data));
 
-        Mail::to('irynavely93@gmail.com')->send(new NewContactReceived($data)); 
+        Mail::to('dario@gmail.com')->send(new NewContactReceived($data)); 
 
         return response()->json([
             'message' => "Grazie {$data['name']} per il tuo messaggio. Ti contatteremo presto!"
